@@ -4,8 +4,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.Is.is;
 
 @QuarkusTest
@@ -37,6 +36,16 @@ class BookResourceTest {
                 .then()
                 .statusCode(200)
                 .body(notNullValue());
+    }
+
+    @Test
+    void testGetNonExistingBook() {
+        given()
+                .pathParam("id", "-1")
+                .when().get("/api/books/{id}")
+                .then()
+                .statusCode(200)
+                .body(is("null"));
     }
 
 }
