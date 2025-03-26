@@ -32,10 +32,11 @@ class BookResourceTest {
     @Test
     void testGetBookIdOne() {
         given()
-                .when().get("/api/books/1")
+                .pathParam("id", "1")
+                .when().get("/api/books/{id}")
                 .then()
                 .statusCode(200)
                 .body(notNullValue());
     }
-    
+
 }
